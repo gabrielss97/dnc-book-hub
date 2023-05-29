@@ -4,6 +4,7 @@ import search from "./assets/image/search.png";
 import { useState, useEffect } from "react";
 
 function App() {
+  // Define os estados iniciais da aplicação
   const [valorTermo, setvalorTermo] = useState("");
   const [mostrarLivro, setMostrarLivro] = useState("hidden");
   const [autor, setAutor] = useState("");
@@ -14,10 +15,12 @@ function App() {
   const [modalMensagem, setModalMensagem] = useState("");
   const [mostrarModal, setMostrarModal] = useState(false);
 
+  // Define a função que atualiza o valorTermo com o valor do input
   function termoBusca(event) {
     setvalorTermo(event.target.value);
   }
 
+  // Define a função que procura um livro com base no valorTermo
   function buscarLivro(input) {
     const livroPesquisado = livrosMock.find(
       (livro) =>
@@ -38,38 +41,46 @@ function App() {
     setvalorTermo("");
   }
 
+  // Define a função que exibe o modal "Já li"
   function modalJaLi() {
     setModalMensagem("Adicionado à lista dos livros já lidos");
     setMostrarModal(true);
   }
 
+  // Define a função que exibe o modal "Quero ler"
   function modalQueroLer() {
     setModalMensagem("Adicionado à lista de leitura");
     setMostrarModal(true);
   }
 
+  // Define o efeito que oculta o modal após 3 segundos
   useEffect(() => {
     if (mostrarModal) {
       const timer = setTimeout(() => {
         setMostrarModal(false);
-      }, 3000); // Oculta o modal após 3 segundos
+      }, 3000);
 
-      return () => clearTimeout(timer); // Limpa o timer caso o componente seja desmontado
+      return () => clearTimeout(timer);
     }
   }, [mostrarModal]);
 
   return (
     <div className="App">
+      {/* ==== MODAL AQUI ==== */}
       {mostrarModal && (
         <div className="modal">
           <p>{modalMensagem}</p>
         </div>
       )}
 
+      {/* ==== NAVBAR AQUI ==== */}
       <nav>
         <img src={logo} alt="bookhub logo" />
       </nav>
+
+      {/* ==== MAIN AQUI ==== */}
       <main>
+        {/* ==== INPUT DE BUSCA AQUI ==== */}
         <div className="left">
           <h1>
             Qual livro você quer
@@ -81,11 +92,15 @@ function App() {
           </div>
           <button onClick={() => buscarLivro(valorTermo.trim())}>BUSCAR</button>
         </div>
+
+        {/* ====RESUMO DO LIVRO AQUI ==== */}
         <div className={mostrarLivro}>
           <div className="top">
             <img src={imagem} alt={nome} />
             <div className="buttons">
+              {/* Botão para marcar o livro como lido */}
               <button onClick={modalJaLi}>Já Li!</button>
+              {/* Botão para adicionar o livro à lista de leitura */}
               <button onClick={modalQueroLer}>Quero Ler!</button>
             </div>
           </div>
@@ -103,6 +118,8 @@ function App() {
           </div>
         </div>
       </main>
+
+      {/* ==== RODAPÉ AQUI ==== */}
       <footer></footer>
     </div>
   );
